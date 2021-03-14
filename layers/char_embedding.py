@@ -10,6 +10,7 @@ class CharEmbedding(nn.Module):
      '''
     def __init__(self, args):
         super(CharEmbedding, self).__init__()
+
         self.embd_size = args.c_embd_size
         self.embedding = nn.Embedding(args.vocab_size_c, args.c_embd_size)
         # nn.Conv1d(in_channels, out_channels, kernel_size, stride=1, padding=0, ...
@@ -19,11 +20,13 @@ class CharEmbedding(nn.Module):
     def forward(self, x):
         # x: (N, seq_len, word_len)
         input_shape = x.size()
+        print('CharEmbedding Input: {}'.format(str(input_shape)[10:]))
         # bs = x.size(0)
         # seq_len = x.size(1)
         word_len = x.size(2)
         x = x.view(-1, word_len) # (N*seq_len, word_len)
         x = self.embedding(x) # (N*seq_len, word_len, c_embd_size)
+        print('Embedding out: {}'.format(str(x.shape)[10:]))
         x = x.view(*input_shape, -1) # (N, seq_len, word_len, c_embd_size)
         x = x.sum(2) # (N, seq_len, c_embd_size)
 
@@ -42,5 +45,7 @@ class CharEmbedding(nn.Module):
         # (N, seq_len, Cout==word_embd_size)
         x = torch.cat(x, 1)
         x = self.dropout(x)
+
+        print('CharEmbedding Output: {}'.format(str(x.size())[10:]))
 
         return x

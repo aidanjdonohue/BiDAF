@@ -47,9 +47,11 @@ class BiDAF(nn.Module):
         # 1. Caracter Embedding Layer
         # 2. Word Embedding Layer
         # 3. Contextual  Embedding Layer
+
         embd_context = self.build_contextual_embd(ctx_c, ctx_w)     # (N, T, 2d)
         embd_query   = self.build_contextual_embd(query_c, query_w) # (N, J, 2d)
 
+        print('embd_query Output: ' + "{}".format(str(embd_query.size()))[10:])
         # 4. Attention Flow Layer
         # Make a similarity matrix
         shape = (batch_size, T, J, 2*self.d)            # (N, T, J, 2d)

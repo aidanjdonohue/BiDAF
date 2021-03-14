@@ -103,7 +103,7 @@ def custom_loss_fn(data, labels):
 def train(model, data, optimizer, ema, n_epoch=30, start_epoch=0, batch_size=args.batch_size):
     print('----Train---')
     label = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
-    logger = Logger('./logs/' + label)
+    #logger = Logger('./logs/' + label)
     model.train()
     for epoch in range(start_epoch, n_epoch):
         print('---Epoch', epoch)
@@ -146,8 +146,8 @@ def train(model, data, optimizer, ema, n_epoch=30, start_epoch=0, batch_size=arg
                         offset = epoch * (len(batches) * batch_size)
                         step = i * batch_size + offset
                         name = name.replace('.', '/')
-                        logger.histo_summary(name, to_np(param), step)
-                        logger.histo_summary(name + '/grad', to_np(param.grad), step)
+                        #logger.histo_summary(name, to_np(param), step)
+                        #logger.histo_summary(name + '/grad', to_np(param.grad), step)
 
             optimizer.zero_grad()
             (loss_p1+loss_p2).backward()

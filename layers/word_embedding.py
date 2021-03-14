@@ -13,4 +13,8 @@ class WordEmbedding(nn.Module):
             self.embedding.weight = nn.Parameter(args.pre_embd_w, requires_grad=is_train_embd)
 
     def forward(self, x):
-        return self.embedding(x)
+        
+        print('WordEmbedding Input: ' + "{}".format(str(x.size()))[10:])
+        x = self.embedding(x)
+        print('WordEmbedding Output: ' + "{}".format(str(x.size()))[10:])
+        return x
